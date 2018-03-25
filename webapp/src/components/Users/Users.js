@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import { Table, Pagination, Popconfirm, Button } from 'antd';
+import { Row, Col, Table, Pagination, Popconfirm, Button } from 'antd';
 import styles from './Users.css';
 import UserModal from './UserModal';
 import { PAGE_SIZE } from '../../constants';
 
-function Users({
+const Users = ({
   dispatch,
   list: dataSource,
   loading,
   total,
-  page: current }) {
+  page: current }) => {
   function deleteHandler(id) {
     dispatch({
       type: 'users/remove',
@@ -42,26 +42,26 @@ function Users({
 
   const columns = [
     {
-      title: 'Name',
+      title: '用户名',
       dataIndex: 'userName',
       key: 'userName',
       render: text => <a href="">{text}</a>,
     },
     {
-      title: 'Email',
+      title: '邮箱',
       dataIndex: 'email',
       key: 'email',
     },
     {
-      title: 'Operation',
+      title: '操作',
       key: 'operation',
       render: (text, record) => (
         <span className={styles.operation}>
           <UserModal record={record} onOk={editHandler.bind(null, record.id)}>
-            <a>Edit</a>
+            <a>编辑</a>
           </UserModal>
           <Popconfirm title="Confirm to delete?" onConfirm={deleteHandler.bind(null, record.id)}>
-            <a href="">Delete</a>
+            <a href="">删除</a>
           </Popconfirm>
         </span>
       ),
@@ -71,10 +71,20 @@ function Users({
   return (
     <div className={styles.normal}>
       <div>
+        <div>
+          <Row>
+            <Col span={6}>搜索</Col>
+            <Col span={6}>搜索</Col>
+          </Row>
+        </div>
         <div className={styles.create}>
-          <UserModal record={{}} onOk={createHandler}>
-            <Button type="primary">Create User</Button>
-          </UserModal>
+          <Row type="flex" justify="end" algin="bottom">
+            <Col span="3">
+              <UserModal record={{}} onOk={createHandler}>
+                <Button type="primary">新增</Button>
+              </UserModal>
+            </Col>
+          </Row>
         </div>
         <Table
           columns={columns}
@@ -84,6 +94,8 @@ function Users({
           pagination={false}
         />
         <Pagination
+          showQuickJumper
+          defaultCurrent={1}
           className="ant-table-pagination"
           total={total}
           current={current}
@@ -93,8 +105,7 @@ function Users({
       </div>
     </div>
   );
-}
-
+};
 function mapStateToProps(state) {
   const { list, total, page } = state.users;
   return {

@@ -36,7 +36,6 @@ export default async function request(url, options) {
   checkStatus(response);
 
   const data = await response.json();
-  console.log(data);
 
   return data;
 }
