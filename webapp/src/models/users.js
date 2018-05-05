@@ -48,6 +48,7 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, query }) => {
         if (pathname === '/users') {
+          console.log(query, 'query');
           dispatch({ type: 'fetch', payload: query });
         }
       });

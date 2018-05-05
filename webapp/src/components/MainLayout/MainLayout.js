@@ -8,7 +8,7 @@ function Header({ location }) {
     <div className={Style.leftNav}>
       <Menu
         selectedKeys={[location.pathname]}
-        mode="vertical"
+        mode="inline"
         theme="dark"
       >
         <Menu.Item key="/">
@@ -16,6 +16,9 @@ function Header({ location }) {
         </Menu.Item>
         <Menu.Item key="/users">
           <Link to="/users"><Icon type="bars" />Users</Link>
+        </Menu.Item>
+        <Menu.Item key="/doc">
+          <Link to="/doc"><Icon type="bars" />文档</Link>
         </Menu.Item>
       </Menu>
     </div>
